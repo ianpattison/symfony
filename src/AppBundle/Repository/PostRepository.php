@@ -50,6 +50,9 @@ class PostRepository extends EntityRepository
 
         return $this->createPaginator($query, $page);
     }
+  
+
+
 
     private function createPaginator(Query $query, $page)
     {

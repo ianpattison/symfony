@@ -1,44 +1,336 @@
-{% extends 'base.html.twig' %}
+{# This is the base template used as the application layout which contains the common elements and decorates all the other templates. See https://symfony.com/doc/current/book/templating.html#template-inheritance-and-layouts #}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
 
-{% block body_id 'homepage' %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Symfony Demo application{% endblock %}</title>
+  <link rel="alternate" type="application/rss+xml" title="{{ 'rss.title'|trans }}" href="{{ path('blog_rss') }}"> {% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('build/css/app.css') }}"> {% endblock %}
+  <link rel="stylesheet" href="{{ asset('build/css/bbpress.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/editor.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/libs.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/theme.less') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/theme.min.css') }}">
 
-{#
-    the homepage is a special page which displays neither a header nor a footer.
-    this is done with the 'trick' of defining empty Twig blocks without any content
-#}
-{% block header %}{% endblock %}
-{% block footer %}{% endblock %}
+  
+  <!-- from wp -->
+  
+  <link rel='stylesheet' id='contact-form-7-css'  href='http://www.ianpattison.co.nz/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=4.9' type='text/css' media='all' />
+<link rel='stylesheet' id='js_composer_front-css'  href='http://www.ianpattison.co.nz/wp-content/plugins/js_composer/assets/css/js_composer.min.css?ver=5.2.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wanium-google-fonts-css'  href='https://fonts.googleapis.com/css?family=Roboto%3A400%2C100%2C300%2C400%2C400italic%2C600%2C700%7CMontserrat%3A400%2C100%2C300%2C400%2C600%2C700%7CSource+Sans+Pro%3A400%2C100%2C300%2C400%2C600%2C700%7CMontserrat%3A400%2C100%2C300%2C400%2C600%2C700%7CMontserrat%3A400%2C100%2C300%2C400%2C600%2C700%7COpen+Sans%3A400&#038;subset=latin%2Clatin-ext&#038;ver=4.8.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wanium-libs-css'  href='http://www.ianpattison.co.nz/wp-content/themes/wanium/assets/css/libs.css?ver=4.8.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wanium-theme-styles-css'  href='http://www.ianpattison.co.nz/wp-content/uploads/wp-less-cache/wanium-theme-styles.css?ver=1508365164' type='text/css' media='all' />
+<link rel='stylesheet' id='wanium-style-css'  href='http://www.ianpattison.co.nz/wp-content/themes/wanium/style.css?ver=4.8.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.ianpattison.co.nz/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://www.ianpattison.co.nz/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='http://www.ianpattison.co.nz/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.ianpattison.co.nz/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.ianpattison.co.nz/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.8.2" />
+<link rel="canonical" href="http://www.ianpattison.co.nz/" />
+<link rel="alternate" type="application/json+oembed" href="http://www.ianpattison.co.nz/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.ianpattison.co.nz%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.ianpattison.co.nz/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.ianpattison.co.nz%2F&#038;format=xml" />
+<meta name="generator" content="Powered by Visual Composer - drag and drop page builder for WordPress."/>
+<!--[if lte IE 9]><link rel="stylesheet" type="text/css" href="http://www.ianpattison.co.nz/wp-content/plugins/js_composer/assets/css/vc_lte_ie9.min.css" media="screen"><![endif]--><link rel="icon" href="http://www.ianpattison.co.nz/wp-content/uploads/2017/10/cropped-tick-2-32x32.jpg" sizes="32x32" />
+<link rel="icon" href="http://www.ianpattison.co.nz/wp-content/uploads/2017/10/cropped-tick-2-192x192.jpg" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="http://www.ianpattison.co.nz/wp-content/uploads/2017/10/cropped-tick-2-180x180.jpg" />
+<meta name="msapplication-TileImage" content="http://www.ianpattison.co.nz/wp-content/uploads/2017/10/cropped-tick-2-270x270.jpg" />
+<noscript><style type="text/css"> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript></head>
+  
+  
+  
+  <!-- ^ from wp -->
+  
+  
+  
+  
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
 
-{% block body %}
-    <div class="page-header">
-        <h1>{{ 'title.homepage'|trans|raw }}</h1>
-    </div>
+<body id="{% block body_id %}{% endblock %}">
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="jumbotron">
-                <p>
-                    {{ 'help.browse_app'|trans|raw }}
-                </p>
-                <p>
-                    <a class="btn btn-primary btn-lg" href="{{ path('blog_index') }}">
-                        <i class="fa fa-users" aria-hidden="true"></i> {{ 'action.browse_app'|trans }}
-                    </a>
-                </p>
-            </div>
+  {% block header %}
+  <header>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header col-md-3 col-lg-2">
+          <a class="navbar-brand" href="{{ path('homepage') }}">
+Ian Pattison                            </a>
+
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">{{ 'menu.toggle_nav'|trans }}</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
         </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {% block header_navigation_links %}
+            <li>
+              <a href="{{ path('blog_index') }}">Demos (remove)</a> <!-- the path is the name of the controller? -->
+            </li>
+            <li>
+              <a href="{{ path('education') }}">Education</a> <!-- the path is the name of the controller? -->
+            </li>
+            <li>
+              <a href="{{ path('industry_experience') }}">Industry Experience</a>
+            </li>
+            <li>
+              <a href="{{ path('work') }}">Work</a>
+            </li>
 
-        <div class="col-sm-6">
-            <div class="jumbotron">
-                <p>
-                    {{ 'help.browse_admin'|trans|raw }}
-                </p>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="locales">Commentary</a>
+              <ul class="dropdown-menu locales" role="menu" aria-labelledby="locales">
+                {% for locale in locales() %}
+                <li {% if app.request.locale==locale.code %}aria-checked="true" class="active" {% else %}aria-checked="false" {% endif %} role="menuitem"><a href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">{{ locale.name|capitalize }}</a></li>
+                {% endfor %} {% endblock %}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% endblock %}
+
+  <div class="container body-container">
+    <section class="vc_row wpb_row vc_row-fluid bg-light pb0 not-equal not-color">
+    
+                  <div class="mb16 mb16 mb-xs-40 text-center">
+                    <h5 class="widgettitle mb10">, web developer, Tāmaki-makau-rau</h5></div>
+                
+    </section>
+    
+    
+    <section class="vc_row wpb_row vc_row-fluid bg-light not-equal not-color">
+      <div class=" container ">
+        <div class="row ">
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  ">
+                  <div class="intro-image border-radious-top overflow-hidden">
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <h5 class="widgettitle dark-color mb16">Industry Experience</h5>
+                    <div class="text-color mt24"></div><a id="btn-59e7d36cef9e6" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="http://localhost/ianpattison20/industry-experience/" target="_self">EXPLORE<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  ">
+                  <div class="intro-image border-radious-top overflow-hidden">
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <h5 class="widgettitle dark-color mb16">Education</h5>
+                    <div class="text-color mt24"></div><a id="btn-59e7d36cf1844" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="http://localhost/ianpattison20/education/" target="_self">EXPLORE<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  ">
+                  <div class="intro-image border-radious-top overflow-hidden">
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <h5 class="widgettitle dark-color mb16">Portfolio</h5>
+                    <div class="text-color mt24"></div><a id="btn-59e7d36cf3137" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="http://localhost/ianpattison20/portfolio/" target="_self">EXPLORE<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+        <section class="vc_row wpb_row vc_row-fluid bg-light not-equal not-color">
+      <div class=" container ">
+        <div class="row ">
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white ">
+                  <div class="intro-image border-radious-top overflow-hidden"><img width="1600" height="976" src="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1.jpg" class="background-image" alt="" srcset="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1.jpg 1600w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1-300x183.jpg 300w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1-768x468.jpg 768w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1-1024x625.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <div class="widgetsubtitle mb16 uppercase-force">Alignment of values and goals</div>
+                    <h5 class="widgettitle dark-color mb16">Conscientious</h5>
+                    <div class="text-color mt24">Talent plays very little part in success at high levels. Success comes through the alignment of values with goals.</div><a id="btn-59e7d36d06fd9" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="#" target="_self">Explore<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white ">
+                  <div class="intro-image border-radious-top overflow-hidden"><img width="1600" height="981" src="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1.jpg" class="background-image" alt="" srcset="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1.jpg 1600w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1-300x184.jpg 300w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1-768x471.jpg 768w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1-1024x628.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <div class="widgetsubtitle mb16 uppercase-force">Why do things happen?</div>
+                    <h5 class="widgettitle dark-color mb16">Curious</h5>
+                    <div class="text-color mt24">I am an eternally curious person. I am the sort of person who wants to play around and find out how things work.</div><a id="btn-59e7d36d04bf1" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="#" target="_self">Explore<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white ">
+                  <div class="intro-image border-radious-top overflow-hidden">
+                    <img width="1600" height="973" src="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720693-1.jpg" class="background-image" alt="" srcset="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720693-1.jpg 1600w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720693-1-300x182.jpg 300w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720693-1-768x467.jpg 768w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720693-1-1024x623.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <div class="widgetsubtitle mb16 uppercase-force">Outgoing and communicative</div>
+                    <h5 class="widgettitle dark-color mb16">Net Promoter</h5>
+                    <div class="text-color mt24">Often, the key to success is communication. I am an outgoing pro-social people person with a high NPS.</div><a id="btn-59e7d36d02274" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="#" target="_self">Explore<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    <section class="vc_row wpb_row vc_row-fluid bg-light pt0 not-equal not-color">
+      <div class=" container ">
+        <div class="row ">
+
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  wpb_animate_when_almost_visible wpb_none none ">
+                  <div class="intro-image border-radious-top overflow-hidden"><img width="1600" height="981" src="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1.jpg" class="background-image" alt="" srcset="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1.jpg 1600w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1-300x184.jpg 300w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1-768x471.jpg 768w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720348-1-1024x628.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <div class="widgetsubtitle mb16 uppercase-force">Why do things happen?</div>
+                    <h5 class="widgettitle dark-color mb16">Curious</h5>
+                    <div class="text-color mt24">I am an eternally curious person. I am the sort of person who wants to play around and find out how things work.</div><a id="btn-59e7d36d04bf1" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="#" target="_self">Explore<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  wpb_animate_when_almost_visible wpb_none none ">
+                  <div class="intro-image border-radious-top overflow-hidden"><img width="1600" height="976" src="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1.jpg" class="background-image" alt="" srcset="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1.jpg 1600w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1-300x183.jpg 300w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1-768x468.jpg 768w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/P1720578-1-1024x625.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <div class="widgetsubtitle mb16 uppercase-force">Alignment of values and goals</div>
+                    <h5 class="widgettitle dark-color mb16">Conscientious</h5>
+                    <div class="text-color mt24">Talent plays very little part in success at high levels. Success comes through the alignment of values with goals.</div><a id="btn-59e7d36d06fd9" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="#" target="_self">Explore<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="vc_row wpb_row vc_row-fluid bg-light pt0 not-equal not-color">
+      <div class=" container ">
+        <div class="row ">
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  wpb_animate_when_almost_visible wpb_none none ">
+                  <div class="intro-image border-radious-top overflow-hidden"><img width="400" height="244" src="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/Americas_Cup_Plymouth_15.jpg" class="background-image" alt="team nz americas cup yacht" srcset="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/Americas_Cup_Plymouth_15.jpg 400w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/Americas_Cup_Plymouth_15-300x183.jpg 300w" sizes="(max-width: 400px) 100vw, 400px" />
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <div class="widgetsubtitle mb16 uppercase-force">COMMENTARY</div>
+                    <h5 class="widgettitle dark-color mb16">America's Cup</h5>
+                    <div class="text-color mt24"></div><a id="btn-59e7d36d0af05" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="http://www.ianpattison.co.nz/americas-cup/" target="_self">Read<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  wpb_animate_when_almost_visible wpb_none none ">
+                  <div class="intro-image border-radious-top overflow-hidden"><img width="800" height="488" src="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/brunel-mapfre.jpg" class="background-image" alt="volvo ocean race yachts brunel and mapfre" srcset="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/brunel-mapfre.jpg 800w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/brunel-mapfre-300x183.jpg 300w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/brunel-mapfre-768x468.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" />
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <div class="widgetsubtitle mb16 uppercase-force">COMMENTARY</div>
+                    <h5 class="widgettitle dark-color mb16">Volvo Ocean Race</h5>
+                    <div class="text-color mt24"></div><a id="btn-59e7d36d0d016" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="http://www.ianpattison.co.nz/volvo-ocean-race/" target="_self">Read<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wpb_column vc_column_container vc_col-sm-4">
+            <div class="vc_column-inner ">
+              <div class="wpb_wrapper">
+                <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  wpb_animate_when_almost_visible wpb_none none ">
+                  <div class="intro-image border-radious-top overflow-hidden"><img width="800" height="488" src="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/screens.jpg" class="background-image" alt="dual monitor desktop and devices" srcset="http://www.ianpattison.co.nz/wp-content/uploads/2016/02/screens.jpg 800w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/screens-300x183.jpg 300w, http://www.ianpattison.co.nz/wp-content/uploads/2016/02/screens-768x468.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" />
+                  </div>
+                  <div class="intro-content pt32 pb16 pl-32 pr-32">
+                    <div class="widgetsubtitle mb16 uppercase-force">COMMENTARY</div>
+                    <h5 class="widgettitle dark-color mb16">Tech & Gear</h5>
+                    <div class="text-color mt24"></div><a id="btn-59e7d36d0f580" class="btn-new btn-1 btn-1e   btn-lg btn-sm-sm text-center mr-0 mb0 mt24" href="http://www.ianpattison.co.nz/tech-gear/" target="_self">Read<i class="ti-angle-right"></i></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+                <p>{{ 'help.browse_admin'|trans|raw }} </p>
                 <p>
                     <a class="btn btn-primary btn-lg" href="{{ path('admin_index') }}">
                         <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_admin'|trans }}
                     </a>
                 </p>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+           
+                
+                
+
+
+                {% block footer %}
+                <footer>
+                  <div class="container">
+                    <div class="row">
+                      <div id="footer-copyright" class="col-md-6">
+                        <p>&copy; {{ 'now'|date('Y') }} - The Symfony Project</p>
+                        <p>{{ 'mit_license'|trans }}</p>
+                      </div>
+                      <div id="footer-resources" class="col-md-6">
+                        <p>
+                          <a href="https://twitter.com/symfony" title="Symfony Twitter">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                          </a>
+                          <a href="https://www.facebook.com/SensioLabs" title="SensioLabs Facebook">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                          </a>
+                          <a href="https://symfony.com/blog/" title="Symfony Blog">
+                            <i class="fa fa-rss" aria-hidden="true"></i>
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </footer>
+                {% endblock %} {% block javascripts %}
+                <script src="{{ asset('build/manifest.js') }}"></script>
+                <script src="{{ asset('build/js/common.js') }}"></script>
+                <script src="{{ asset('build/js/app.js') }}"></script>
+                {% endblock %} {# it's not mandatory to set the timezone in localizeddate(). This is done to avoid errors when the 'intl' PHP extension is not available and the application is forced to use the limited "intl polyfill", which only supports UTC and GMT #}
+                <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %} {% block body_id 'education' %} {% block main %} 
+
+<h2 style="font-weight:900; letter-spacing: 1.5px">EDUCATION TITLE HERE</h1><br>
+{% for post in posts %}
+
+
+
+<article class="postc_row wpb_row vc_row-fluid bg-light not-equal not-color">
+  <div class=" container ">
+    <div class="row ">
+      <div class="wpb_column vc_column_container vc_col-sm-12">
+        <div class="vc_column-inner ">
+          <div class="wpb_wrapper">
+            <div class="boxed-intro-content heavy-shadow zoom-hover bg-white  ">
+              <div class="intro-image border-radious-top overflow-hidden">
+              </div>
+              
+              <div class="intro-content pt32 pb16 pl-32 pr-32">
+                <h5  >
+                <a href="{{ path('blog_post', {slug: post.slug}) }}" class="widgettitle.large-widgettitle dark-color mb16" style="font-size: 37px; font-weight: 700">
+                    {{ post.title }}
+                </a>
+            </h5>
+
+                <p class="post-metadata">
+                  <span class="metadata"><i class="fa fa-calendar"></i> {{ post.publishedAt|localizeddate('long', 'medium', null, 'UTC') }}</span>
+                  <span class="metadata"><i class="fa fa-user"></i> {{ post.author.fullName }}</span>
+                </p>
+
+                {{ post.summary|md2html }} {{ include('blog/_post_tags.html.twig') }}
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+ <br><br>
+
+
+
+
+{% else %}
+<div class="well">{{ 'post.no_posts_found'|trans }}</div>
+{% endfor %} {% if posts.haveToPaginate %}
+<div class="navigation text-center">
+  {{ pagerfanta(posts, 'twitter_bootstrap3_translated', {routeName: 'blog_index_paginated'}) }}
+</div>
+{% endif %} {% endblock %} {% block sidebar %} {{ parent() }} {{ show_source_code(_self) }} {{ include('blog/_rss.html.twig') }} {% endblock %}
