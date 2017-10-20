@@ -54,12 +54,18 @@ class BlogController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository(Post::class)->findLatest($page);
+      $tags = $em->getRepository(Post::class)->findLatest($page);
 
         // Every template name also has two extensions that specify the format and
         // engine for that template.
         // See https://symfony.com/doc/current/templating.html#template-suffix
        // return $this->render('blog/index.'.$_format.'.twig', ['posts' => $posts]);
-      return $this->render('blog/education.html.twig', ['posts' => $posts]);
+      
+      return $this->render('blog/education.html.twig', ['posts' => $posts, 'tags' => $posts]);
+      
+      
+      
+      
     }
   
         /**

@@ -1,8 +1,13 @@
-{% extends 'base.html.twig' %} {% block body_id 'education' %} {% block main %} 
+{% extends 'base.html.twig' %}
+{% block body_id 'education' %}
+{% block main %} 
 
 <h2 style="font-weight:900; letter-spacing: 1.5px">EDUCATION TITLE HERE</h1><br>
-{% for post in posts %}
 
+
+{% for post in posts %}
+{% for tag in tags %}
+{% if tag == '11' %}
 
 
 <article class="postc_row wpb_row vc_row-fluid bg-light not-equal not-color">
@@ -18,7 +23,7 @@
               <div class="intro-content pt32 pb16 pl-32 pr-32">
                 <h5  >
                 <a href="{{ path('blog_post', {slug: post.slug}) }}" class="widgettitle.large-widgettitle dark-color mb16" style="font-size: 37px; font-weight: 700">
-                    {{ post.title }}
+                    {{ post.title }} TEST TEXT
                 </a>
             </h5>
 
@@ -27,8 +32,13 @@
                   <span class="metadata"><i class="fa fa-user"></i> {{ post.author.fullName }}</span>
                 </p>
 
-                {{ post.summary|md2html }} {{ include('blog/_post_tags.html.twig') }}
+                {{ post.summary|md2html }} 
+             
+                
+                {% endif %}
+                {% endfor %}
                
+                
               </div>
             </div>
           </div>
@@ -44,8 +54,8 @@
 
 {% else %}
 <div class="well">{{ 'post.no_posts_found'|trans }}</div>
-{% endfor %} {% if posts.haveToPaginate %}
-<div class="navigation text-center">
-  {{ pagerfanta(posts, 'twitter_bootstrap3_translated', {routeName: 'blog_index_paginated'}) }}
-</div>
-{% endif %} {% endblock %} {% block sidebar %} {{ parent() }} {{ show_source_code(_self) }} {{ include('blog/_rss.html.twig') }} {% endblock %}
+{% endfor %} 
+
+
+
+{% endblock %} {% block sidebar %} {{ parent() }} {{ show_source_code(_self) }} {{ include('blog/_rss.html.twig') }} {% endblock %}
