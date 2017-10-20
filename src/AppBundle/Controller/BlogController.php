@@ -13,6 +13,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Post;
+use AppBundle\Entity\Tag;
 use AppBundle\Events;
 use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -42,7 +43,6 @@ class BlogController extends Controller
       /**
      * @Route("/education", defaults={"page": "1", "_format"="html"}, name="education")
      * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, name="blog_rss")
-     * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="blog_index_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
      *
@@ -54,20 +54,15 @@ class BlogController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository(Post::class)->findLatest($page);
-      $tags = $em->getRepository(Post::class)->findLatest($page);
+        $tags = $em->getRepository(Tag::class);
 
         // Every template name also has two extensions that specify the format and
         // engine for that template.
         // See https://symfony.com/doc/current/templating.html#template-suffix
        // return $this->render('blog/index.'.$_format.'.twig', ['posts' => $posts]);
       
-      return $this->render('blog/education.html.twig', ['posts' => $posts, 'tags' => $posts]);
-      
-      
-      
-      
+      return $this->render('blog/education.html.twig', ['posts' => $posts, 'tags' => $tags]);
     }
-  
         /**
      * @Route("/industry", defaults={"page": "1", "_format"="html"}, name="industry_experience")
      * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, name="blog_rss")
@@ -91,9 +86,6 @@ class BlogController extends Controller
        // return $this->render('blog/index.'.$_format.'.twig', ['posts' => $posts]);
       return $this->render('blog/industry.html.twig', ['posts' => $posts]);
     }
-  
-  
-  
     /**
      * @Route("/", defaults={"page": "1", "_format"="html"}, name="work")
      * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, name="blog_rss")
@@ -116,8 +108,6 @@ class BlogController extends Controller
        // return $this->render('blog/index.'.$_format.'.twig', ['posts' => $posts]);
       return $this->render('blog/index.'.$_format.'.twig', ['posts' => $posts]);
     }
-  
-  
   /*END IAN ONES */
   
     /**

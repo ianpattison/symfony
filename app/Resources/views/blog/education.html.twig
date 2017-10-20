@@ -7,7 +7,7 @@
 
 {% for post in posts %}
 {% for tag in tags %}
-{% if tag == '11' %}
+{% if tag == '37' %}
 
 
 <article class="postc_row wpb_row vc_row-fluid bg-light not-equal not-color">
@@ -21,9 +21,9 @@
               </div>
               
               <div class="intro-content pt32 pb16 pl-32 pr-32">
-                <h5  >
+                <h5  ><p>TEST TEXT</p>
                 <a href="{{ path('blog_post', {slug: post.slug}) }}" class="widgettitle.large-widgettitle dark-color mb16" style="font-size: 37px; font-weight: 700">
-                    {{ post.title }} TEST TEXT
+                    {{ post.title }}
                 </a>
             </h5>
 
@@ -47,7 +47,7 @@
     </div>
   </div>
 </article>
- <br><br>
+ <br>
 
 
 
